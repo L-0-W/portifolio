@@ -1,7 +1,6 @@
 /**
  * Conteúdo de exemplo para avaliar o desenho.
  * Troque pelos seus dados quando quiser — a página inteira lê daqui.
- * Enquanto `portraitSrc` for null, o retrato mostra as iniciais.
  * Um href "#" não navega. Um href que começa com http abre em nova aba.
  * Em cada projeto, `accent` colore o endereço e a tinta da gravura.
  * `motif` "hatch", "dots" ou "cross" imprime o fundo; "plain" deixa o papel liso.
@@ -128,8 +127,6 @@ export const statusLabel: Record<ReadingStatus, string> = {
 
 export const profile = {
   name: "Helena Duarte",
-  initials: "HD",
-  portraitSrc: null as string | null,
   kicker: "Folha pessoal",
   trade: "Designer de interfaces",
   tags: ["Interfaces", "Ofício", "Tipo"] as const,

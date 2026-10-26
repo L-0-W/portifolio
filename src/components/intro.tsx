@@ -1,6 +1,5 @@
+import { NewtonCard } from "@/components/stage/newton-card";
 import { InlineText } from "@/components/inline-text";
-import { Portrait } from "@/components/portrait";
-import { PressWing } from "@/components/stage/press-wing";
 import { SocialLinks } from "@/components/social-links";
 import { profile } from "@/content/portfolio";
 
@@ -8,10 +7,7 @@ export function Intro() {
   return (
     <header className="intro plate-hero mast">
       <div className="poster-slot">
-        <PressWing />
-        <div className="mast-seal">
-          <Portrait initials={profile.initials} src={profile.portraitSrc} />
-        </div>
+        <NewtonCard />
       </div>
       <div className="plate-copy">
         <p className="mast-kicker">{profile.kicker}</p>
