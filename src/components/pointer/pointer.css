@@ -1,0 +1,100 @@
+:root {
+  --scroll-thumb: color-mix(in srgb, var(--paper) 50%, var(--stage));
+  --scroll-thumb-hot: color-mix(in srgb, var(--oxblood) 70%, var(--paper));
+  --scroll-thumb-press: color-mix(in srgb, var(--paper) 78%, var(--stage));
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--stage);
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--stage);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 4px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hot);
+}
+
+html::-webkit-scrollbar-thumb:active {
+  background: var(--scroll-thumb-press);
+}
+
+html::-webkit-scrollbar-corner {
+  background: var(--stage);
+}
+
+.site-pointer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  pointer-events: none;
+  opacity: 0;
+  color: var(--sheet);
+  --pointer-stroke: var(--ink);
+  --x: -40px;
+  --y: -40px;
+  transform: translate3d(calc(var(--x) - 1px), calc(var(--y) - 1px), 0);
+}
+
+.site-pointer[data-state="pointer"] {
+  color: var(--ink);
+  --pointer-stroke: var(--sheet);
+}
+
+.site-pointer[data-live="on"] {
+  opacity: 1;
+}
+
+.site-pointer svg {
+  display: block;
+  overflow: visible;
+  fill: currentColor;
+  stroke: var(--pointer-stroke);
+  stroke-width: 1.2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+html:has(.site-pointer[data-live="on"]),
+html:has(.site-pointer[data-live="on"]) * {
+  cursor: none;
+}
+
+@media (forced-colors: active) {
+  html {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+
+  .site-pointer {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-pointer {
+    transition: none;
+  }
+}
