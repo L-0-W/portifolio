@@ -1,10 +1,12 @@
 import { PaperGrain } from "@/components/paper-grain";
+import { SitePointer } from "@/components/pointer/site-pointer";
 import "@/components/roster/roster.css";
 import "@/components/stage/stage.css";
 import { profile } from "@/content/portfolio";
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist, Newsreader } from "next/font/google";
 import "./globals.css";
+import "@/components/pointer/pointer.css";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -44,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div className="vignette" aria-hidden="true" />
         <PaperGrain />
         {children}
+        <SitePointer />
       </body>
     </html>
   );

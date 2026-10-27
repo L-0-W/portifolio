@@ -25,7 +25,6 @@
 html {
   height: 100%;
   background: var(--stage);
-  scrollbar-color: #5c4e42 var(--stage);
 }
 
 body {
