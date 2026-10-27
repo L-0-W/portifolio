@@ -20,4 +20,3 @@ Tudo que a página mostra está em `src/content/portfolio.ts`: nome, texto, rede
 - Um `href` com `"#"` não sai da página.
 - Um `href` que começa com `http` abre em nova aba.
 - O card de um projeto abre `/projetos/slug`. Na folha, as gravuras ficam em `figures`: arquivo em `public/projetos/`, título e descrição. Se o `href` começa com `http`, a folha mostra esse link com o texto de `linkLabel`.
-- O retrato usa as iniciais enquanto `portraitSrc` for `null`. Para uma foto, coloque o arquivo em `public/` e aponte `portraitSrc` para ele, por exemplo `"/retrato.jpg"`.

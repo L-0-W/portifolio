@@ -15,10 +15,64 @@
 
 .mast .poster-slot {
   position: relative;
+  z-index: 1;
   left: 0;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 17.5rem;
+}
+
+.mast-card {
+  position: relative;
+  pointer-events: auto;
+  display: block;
+  width: min(68%, 16.5rem);
+  height: auto;
+  aspect-ratio: 1100 / 1324;
+  max-height: 94%;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 12px 9px 16px 8px / 9px 16px 8px 12px;
+  background: var(--sheet);
+  box-shadow: 5px 5px 0 var(--ink);
+  overflow: hidden;
+  color: inherit;
+  transform: rotate(-2.6deg);
+  animation: mast-float 6.4s ease-in-out infinite;
+  transition:
+    transform 220ms var(--ease),
+    box-shadow 220ms var(--ease);
+}
+
+.mast-card-img {
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+@keyframes mast-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -0.48rem;
+  }
+}
+
+.mast-card:hover {
+  box-shadow: 8px 8px 0 var(--ink);
+  transform: rotate(-4.4deg);
+}
+
+.mast-card:active {
+  animation-play-state: paused;
+  translate: 2px 2px;
+  box-shadow: 1px 1px 0 var(--ink);
+  transform: rotate(-1.1deg);
 }
 
 .mast .plate-copy {
@@ -65,13 +119,6 @@
   line-height: 1.35;
 }
 
-.mast-seal {
-  position: absolute;
-  z-index: 2;
-  left: 8%;
-  bottom: 20%;
-  transform: rotate(-3deg);
-}
 
 .folio-spread {
   display: flex;
@@ -252,10 +299,14 @@
 
   .mast .poster-slot {
     position: absolute;
-    left: -6%;
-    bottom: -4%;
-    width: 52%;
-    height: 108%;
+    left: -2%;
+    bottom: -2%;
+    width: 46%;
+    height: 104%;
+  }
+
+  .mast-card {
+    width: min(78%, 22rem);
   }
 
   .mast .plate-copy {
@@ -287,10 +338,6 @@
     );
   }
 
-  .mast-seal {
-    left: 8%;
-    bottom: 26%;
-  }
 }
 
 @media (min-width: 900px) {
@@ -334,6 +381,10 @@
   .mast .poster-slot {
     height: 15rem;
   }
+
+  .mast-card {
+    width: min(62%, 14.5rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -347,7 +398,14 @@
     transform: none;
   }
 
-  .mast-seal {
-    transform: rotate(-3deg);
+  .mast-card {
+    animation: none;
+    transition: none;
+  }
+
+  .mast-card:hover,
+  .mast-card:active {
+    translate: 0 0;
+    transform: rotate(-2.6deg);
   }
 }

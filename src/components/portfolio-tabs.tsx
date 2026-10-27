@@ -11,7 +11,7 @@ import {
   writings,
   type SectionId,
 } from "@/content/portfolio";
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react";
 
 function isSectionId(value: string): value is SectionId {
   return sections.some((section) => section.id === value);
@@ -25,6 +25,7 @@ function sectionFromHash(): SectionId | null {
 export function PortfolioTabs() {
   const [current, setCurrent] = useState<SectionId>("projetos");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const scrollLock = useRef<number | null>(null);
   const section = sections.find((item) => item.id === current) ?? sections[0];
 
   useEffect(() => {
@@ -38,7 +39,17 @@ export function PortfolioTabs() {
     return () => window.removeEventListener("hashchange", syncFromHash);
   }, []);
 
+  // Trocar a seção remove o miolo antes de pintar o próximo. O navegador
+  // encolhe a página nesse intervalo e sobe o scroll, como um atalho para o topo.
+  useLayoutEffect(() => {
+    const y = scrollLock.current;
+    if (y === null) return;
+    scrollLock.current = null;
+    if (window.scrollY !== y) window.scrollTo(0, y);
+  }, [current]);
+
   function select(id: SectionId, shouldFocus = false) {
+    if (id !== current) scrollLock.current = window.scrollY;
     setCurrent(id);
     const nextHash = `#${id}`;
     if (window.location.hash !== nextHash) {
@@ -46,17 +57,7 @@ export function PortfolioTabs() {
     }
 
     const index = sections.findIndex((item) => item.id === id);
-    if (shouldFocus) tabRefs.current[index]?.focus();
-
-    const list = document.getElementById("secoes");
-    if (!list) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (list.getBoundingClientRect().top < 0) {
-      list.scrollIntoView({
-        behavior: reduce ? "auto" : "smooth",
-        block: "nearest",
-      });
-    }
+    if (shouldFocus) tabRefs.current[index]?.focus({ preventScroll: true });
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
