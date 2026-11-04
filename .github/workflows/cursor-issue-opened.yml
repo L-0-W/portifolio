@@ -1,0 +1,58 @@
+name: Cursor — issue aberta
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: read
+
+concurrency:
+  group: cursor-issue-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  notify-cursor-automation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar secrets
+        env:
+          WEBHOOK_URL: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_URL }}
+          WEBHOOK_KEY: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_KEY }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ] || [ -z "$WEBHOOK_KEY" ]; then
+            echo "::error::Configure os secrets CURSOR_AUTOMATION_WEBHOOK_URL e CURSOR_AUTOMATION_WEBHOOK_KEY no repositório."
+            echo "Veja docs/cursor-automation-issue-resolver.md"
+            exit 1
+          fi
+
+      - name: Disparar automação Portifólio - Issue resolver
+        env:
+          WEBHOOK_URL: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_URL }}
+          WEBHOOK_KEY: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_KEY }}
+          ISSUE_JSON: ${{ toJSON(github.event.issue) }}
+          REPO_JSON: ${{ toJSON(github.repository) }}
+        run: |
+          AUTH_VALUE="$(printf '%s' "$WEBHOOK_KEY" | tr -d '\r\n')"
+          payload=$(jq -n \
+            --argjson issue "$ISSUE_JSON" \
+            --argjson repository "$REPO_JSON" \
+            --arg action "${{ github.event.action }}" \
+            --arg sender "${{ github.actor }}" \
+            '{
+              event: "github.issue.opened",
+              action: $action,
+              sender: $sender,
+              repository: $repository,
+              issue: $issue
+            }')
+          http_code=$(curl -sS -o /tmp/cursor-webhook-response.json -w "%{http_code}" \
+            -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${AUTH_VALUE}" \
+            --data-binary "$payload")
+          cat /tmp/cursor-webhook-response.json
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "::error::Webhook Cursor retornou HTTP $http_code"
+            exit 1
+          fi
