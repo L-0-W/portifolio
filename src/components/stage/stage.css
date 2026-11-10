@@ -218,6 +218,39 @@
   transform: rotate(-8deg);
 }
 
+.folio-cover {
+  width: 58%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px 8px 8px 2px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-8deg);
+}
+
+.folio-hero .poster-slot:has(.folio-cover-plate) {
+  z-index: 1;
+  left: 1.6rem;
+  bottom: 1.2rem;
+  width: min(13rem, 38%);
+  height: auto;
+}
+
+.folio-cover-plate {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  object-position: center top;
+  border: 1.5px solid var(--ink);
+  border-radius: 4px 12px 12px 4px;
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(-6deg);
+}
+
 .folio-name {
   position: absolute;
   right: 0.18rem;
@@ -369,6 +402,20 @@
     bottom: -2%;
     width: 78%;
     height: 100%;
+  }
+
+  .folio-hero.is-bleed .poster-slot:has(.folio-cover-plate) {
+    left: 1.6rem;
+    bottom: 1.2rem;
+    width: min(13rem, 34%);
+    height: auto;
+  }
+}
+
+@media (max-width: 899px) {
+  .folio-hero:has(.folio-cover-plate) .plate-foot {
+    width: 46%;
+    margin-left: auto;
   }
 }
 

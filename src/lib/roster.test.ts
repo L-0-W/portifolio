@@ -19,7 +19,17 @@ describe("elenco", () => {
   it("publica cada projeto uma vez, com a gaveta e a reserva no fim", () => {
     assert.deepEqual(
       items.map((item) => item.id),
-      ["lume", "oficina", "margem", "prego", "caderno", "tipo", "gaveta", "reserva"],
+      [
+        "portal-administrativo",
+        "lume",
+        "oficina",
+        "margem",
+        "prego",
+        "caderno",
+        "tipo",
+        "gaveta",
+        "reserva",
+      ],
     );
     for (const project of projects) {
       const found = items.find((item) => item.id === project.slug);
@@ -28,11 +38,11 @@ describe("elenco", () => {
   });
 
   it("abre no projeto marcado como novo", () => {
-    assert.equal(initialSelection(items), "lume");
+    assert.equal(initialSelection(items), "portal-administrativo");
     const fresh = items.filter((item) => item.kind === "project" && item.fresh);
     assert.deepEqual(
       fresh.map((item) => item.id),
-      ["lume"],
+      ["portal-administrativo"],
     );
   });
 
