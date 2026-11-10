@@ -22,7 +22,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 17.5rem;
+  height: auto;
+  padding: 0.45rem 0.35rem 0.2rem;
 }
 
 .mast-card {
@@ -81,7 +82,7 @@
 }
 
 .mast.plate-hero::after {
-  background: linear-gradient(180deg, transparent 0 34%, var(--sheet) 56%);
+  background: none;
 }
 
 .mast-kicker {
@@ -325,17 +326,25 @@
 }
 
 @media (min-width: 720px) {
+  .mast.plate-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 23.5rem) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
   .mast.plate-hero,
   .mast .plate-copy {
     min-height: 34rem;
   }
 
   .mast .poster-slot {
-    position: absolute;
-    left: -2%;
-    bottom: -2%;
-    width: 46%;
-    height: 104%;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    align-self: center;
+    padding: 0.7rem 0.2rem 0.7rem 0.75rem;
   }
 
   .mast-card {
@@ -343,8 +352,9 @@
   }
 
   .mast .plate-copy {
-    width: min(34rem, 58%);
-    margin-left: auto;
+    width: auto;
+    min-width: 0;
+    margin-left: 0;
   }
 
   .mast .mast-kicker,
@@ -365,9 +375,9 @@
   .mast.plate-hero::after {
     background: linear-gradient(
       100deg,
-      transparent 0 34%,
-      color-mix(in srgb, var(--sheet) 72%, transparent) 52%,
-      var(--sheet) 68%
+      transparent 0 40%,
+      color-mix(in srgb, var(--sheet) 72%, transparent) 56%,
+      var(--sheet) 72%
     );
   }
 
@@ -426,11 +436,12 @@
   }
 
   .mast .poster-slot {
-    height: 15rem;
+    height: auto;
+    padding-inline: 0.2rem;
   }
 
-  .mast-card {
-    width: min(62%, 14.5rem);
+  .figure-name {
+    font-size: 0.58rem;
   }
 }
 
@@ -454,5 +465,219 @@
   .mast-card:active {
     translate: 0 0;
     transform: rotate(-2.6deg);
+  }
+}
+
+.figure-grid > li {
+  min-width: 0;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.32rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: auto;
+}
+
+.figure-card {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 3 / 4;
+  padding: 0.22rem;
+  --tilt: -1.1deg;
+  transform: rotate(var(--tilt));
+}
+
+.figure-grid > li:nth-child(2n) .figure-card {
+  --tilt: 1.15deg;
+  animation-delay: -2.1s;
+}
+
+.figure-grid > li:nth-child(4n + 3) .figure-card {
+  animation-delay: -3.7s;
+}
+
+.figure-grid .figure-card:hover {
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(-3.2deg);
+}
+
+.figure-grid .figure-card:active {
+  animation-play-state: paused;
+  translate: 2px 2px;
+  box-shadow: 1px 1px 0 var(--ink);
+  transform: rotate(-0.4deg);
+}
+
+.figure-name {
+  position: relative;
+  z-index: 1;
+  display: block;
+  max-width: 100%;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 0.68rem;
+  font-weight: 620;
+  font-variation-settings: "SOFT" 20, "opsz" 36, "WONK" 1, "wght" 620;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.figure-name.is-caption {
+  position: absolute;
+  right: 0.16rem;
+  bottom: 0.16rem;
+  left: 0.16rem;
+  padding: 0.04rem 0.12rem 0.06rem;
+  border-radius: 0.2rem;
+  background: var(--sheet);
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.figure-card[aria-pressed="true"] {
+  z-index: 2;
+  border-color: #1f6b45;
+  box-shadow:
+    0 0 0 2px #3f9a62,
+    4px 4px 0 var(--ink);
+  transform: rotate(-2.1deg);
+}
+
+.figure-grid:has(.figure-card[aria-pressed="true"]) .figure-card:not([aria-pressed="true"]) {
+  filter: grayscale(1) brightness(0.7);
+}
+
+.figure-grid:has(.figure-card[aria-pressed="true"]) .figure-card:not([aria-pressed="true"]):hover {
+  filter: grayscale(0.35) brightness(0.9);
+}
+
+.figure-card[aria-pressed="true"]:hover {
+  box-shadow:
+    0 0 0 2px #3f9a62,
+    5px 5px 0 var(--ink);
+  transform: rotate(-2.1deg) translate(-1px, -1px);
+}
+
+.figure-card[aria-pressed="true"]:active {
+  translate: 1px 1px;
+  box-shadow:
+    0 0 0 2px #3f9a62,
+    1px 1px 0 var(--ink);
+  transform: rotate(-2.1deg);
+}
+
+.mast.is-glitching .plate-name {
+  font-size: clamp(1.7rem, 7.4cqi, 4.1rem);
+  line-height: 0.92;
+  animation: identity-glitch 2.2s linear both;
+}
+
+.mast.is-glitching .bio {
+  animation: identity-glitch 2.2s linear both;
+}
+
+@keyframes identity-glitch {
+  0%,
+  100% {
+    transform: none;
+    clip-path: inset(0);
+    text-shadow: none;
+  }
+  5% {
+    transform: translate(-3px, 1px);
+    text-shadow:
+      3px 0 #8a332c,
+      -3px 0 #1a3d63;
+  }
+  9% {
+    transform: translate(3px, -1px);
+    clip-path: inset(18% 0 48% 0);
+  }
+  14% {
+    transform: translate(-2px, 0);
+    clip-path: inset(52% 0 12% 0);
+  }
+  20%,
+  80% {
+    transform: none;
+    clip-path: inset(0);
+    text-shadow:
+      1px 0 rgba(138, 51, 44, 0.75),
+      -1px 0 rgba(26, 61, 99, 0.75);
+  }
+  86% {
+    transform: translate(2px, -1px);
+    clip-path: inset(10% 0 58% 0);
+  }
+  93% {
+    transform: translate(-3px, 1px);
+    clip-path: inset(46% 0 16% 0);
+  }
+}
+
+.fragment-rain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fragment {
+  position: absolute;
+  top: 0;
+  color: var(--sheet);
+  font-family: var(--text);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  white-space: nowrap;
+  animation-name: fragment-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fragment-fall {
+  from {
+    transform: translateY(-14vh);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .figure-grid .figure-card,
+  .figure-grid .figure-card:hover,
+  .figure-grid .figure-card:active,
+  .figure-grid .figure-card[aria-pressed="true"],
+  .figure-grid .figure-card[aria-pressed="true"]:hover,
+  .figure-grid .figure-card[aria-pressed="true"]:active {
+    translate: 0 0;
+    transform: rotate(var(--tilt, -1.1deg));
+    transition: none;
+    animation: none;
+  }
+
+  .mast.is-glitching .plate-name,
+  .mast.is-glitching .bio {
+    animation: none;
+  }
+
+  .fragment {
+    animation: none;
+    top: calc(8% + (var(--i) * 10%));
+    opacity: 0.16;
   }
 }
