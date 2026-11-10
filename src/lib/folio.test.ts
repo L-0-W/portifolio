@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describe, it } from "node:test";
 import { profile, readings, socialLinks, writings } from "../content/portfolio.ts";
 import {
@@ -42,7 +44,7 @@ describe("fólio", () => {
   });
 
   it("abre a leitura que está na mão", () => {
-    assert.equal(initialReading(readings), "bringhurst");
+    assert.equal(initialReading(readings), "beautiful-cpp");
     assert.equal(
       initialReading([
         { id: "lido", status: "lido" },
@@ -71,6 +73,16 @@ describe("fólio", () => {
         ["mail", "mailto:fluiz7880@gmail.com"],
       ],
     );
+  });
+
+  it("publica a capa dos livros que estão na mão", () => {
+    const publicRoot = path.join(import.meta.dirname, "../../public");
+    for (const id of ["beautiful-cpp", "crafting-interpreters"]) {
+      const book = readings.find((item) => item.id === id);
+      assert.equal(book?.status, "lendo");
+      assert.ok(book?.cover?.startsWith("/leituras/"), id);
+      assert.equal(existsSync(path.join(publicRoot, book?.cover ?? "")), true, id);
+    }
   });
 
   it("dá id único às escrituras e às leituras, e três adesivos à pessoa", () => {

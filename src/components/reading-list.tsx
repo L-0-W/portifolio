@@ -38,7 +38,13 @@ function ReadingCard({
       aria-controls="leitura-em-foco"
     >
       <span className="folio-face">
-        <span className="folio-volume" />
+        {book.cover ? (
+          // Capa local, no mesmo recorte da lombada. O otimizador não entra aqui.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className="folio-cover" src={book.cover} alt="" />
+        ) : (
+          <span className="folio-volume" />
+        )}
       </span>
       <span className="folio-name">{book.title}</span>
     </button>
@@ -49,7 +55,16 @@ function ReadingPlate({ book }: { book: Reading }) {
   return (
     <div className={`plate-hero is-bleed folio-hero wash-${book.wash}`}>
       <div className="poster-slot">
-        <BookCut />
+        {book.cover ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="folio-cover-plate"
+            src={book.cover}
+            alt={`Capa de ${book.title}`}
+          />
+        ) : (
+          <BookCut />
+        )}
       </div>
       <div className="plate-copy">
         <ul className="stickers" aria-label="Estado">

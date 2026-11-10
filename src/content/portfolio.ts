@@ -10,6 +10,7 @@
  * As gravuras ficam em `public/projetos/`.
  * `linkLabel` nomeia o link externo da folha quando o href começa com http.
  * O perfil tem `trade` e três `tags`. Escrituras e leituras têm `id`.
+ * Uma leitura pode ter `cover`, o caminho da capa em `public/`.
  * O clique seleciona a escritura ou a leitura. O botão "Ler" só aparece se o href começa com http.
  */
 
@@ -117,6 +118,7 @@ export type Reading = {
   status: ReadingStatus;
   note?: string;
   wash: Wash;
+  cover?: string;
 };
 
 export const statusLabel: Record<ReadingStatus, string> = {
@@ -183,6 +185,58 @@ export type SectionId = (typeof sections)[number]["id"];
 
 export const projects: Project[] = [
   {
+    slug: "portal-administrativo",
+    title: "Portal Administrativo",
+    description:
+      "Portal para o dia a dia de uma empresa: boletos, recebimentos, transferências, usuários e plugins para falar com outros lugares, como WhatsApp, Instagram, Gmail e MCP. Nasceu para a Revele Cosméticos e serve a qualquer operação.",
+    url: "github.com/L-0-W/revele_portal_muriae",
+    href: "https://github.com/L-0-W/revele_portal_muriae",
+    linkLabel: "Código",
+    icon: "clipboard",
+    accent: "ochre",
+    motif: "dots",
+    mark: "novo",
+    poster: "sheet",
+    tags: ["Administrativo", "Utilizável", "Em evolução"],
+    marks: ["grade", "medida", "prova", "voz"],
+    figures: [
+      {
+        src: "/projetos/portal-recebimentos.png",
+        alt: "Tela de recebimentos com o saldo do período, cinco lançamentos e o caixa em dinheiro.",
+        title: "Os recebimentos",
+        description:
+          "O dia entra numa lista, com o saldo, a forma e o que ainda falta lançar.",
+      },
+      {
+        src: "/projetos/portal-boletos.png",
+        alt: "Tela de boletos com quatro vencimentos, o total a pagar e um boleto vencido.",
+        title: "Os boletos",
+        description:
+          "Vencimento, situação e o total a pagar ficam no mesmo balcão.",
+      },
+      {
+        src: "/projetos/portal-transferencias.png",
+        alt: "Tela de transferências com o formulário e um lançamento entre caixas.",
+        title: "As transferências",
+        description:
+          "O valor sai de um caixa e entra em outro, com a data na mesma linha.",
+      },
+      {
+        src: "/projetos/portal-usuarios.png",
+        alt: "Tela de usuários com a conta administradora e as permissões por área.",
+        title: "Os usuários",
+        description: "Cada conta leva o que pode ver, criar, editar e apagar.",
+      },
+      {
+        src: "/projetos/portal-plugins.png",
+        alt: "Tela de plugins com os cartões de MCP, WhatsApp, Instagram e Bling.",
+        title: "Os plugins",
+        description:
+          "Um encaixe para falar com outros lugares: MCP, WhatsApp, Instagram e Bling.",
+      },
+    ],
+  },
+  {
     slug: "lume",
     title: "Lume",
     description: "Leitura guiada para a redação diária.",
@@ -192,7 +246,6 @@ export const projects: Project[] = [
     icon: "book",
     accent: "teal",
     motif: "hatch",
-    mark: "novo",
     poster: "lamp",
     tags: ["Leitura", "Calma", "Diária"],
     marks: ["tipo", "voz", "medida", "papel"],
@@ -351,6 +404,7 @@ export type RosterSlot =
   | { kind: "sealed"; id: string };
 
 export const rosterSlots: readonly RosterSlot[] = [
+  { kind: "project", slug: "portal-administrativo" },
   { kind: "project", slug: "lume" },
   { kind: "project", slug: "oficina" },
   { kind: "project", slug: "margem" },
@@ -397,6 +451,22 @@ export const writings: Writing[] = [
 ];
 
 export const readings: Reading[] = [
+  {
+    id: "beautiful-cpp",
+    title: "Beautiful C++",
+    author: "J. Guy Davidson e Kate Gregory",
+    status: "lendo",
+    wash: "sage",
+    cover: "/leituras/beautiful-cpp.png",
+  },
+  {
+    id: "crafting-interpreters",
+    title: "Crafting Interpreters",
+    author: "Robert Nystrom",
+    status: "lendo",
+    wash: "stone",
+    cover: "/leituras/crafting-interpreters.png",
+  },
   {
     id: "bringhurst",
     title: "Os Elementos do Estilo Tipográfico",
