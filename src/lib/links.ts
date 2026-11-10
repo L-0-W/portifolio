@@ -1,5 +1,11 @@
 import type { MouseEvent } from "react";
 
+export const cadernoId = "secoes";
+
+export function scrollCadernoIntoView() {
+  document.getElementById(cadernoId)?.scrollIntoView({ block: "start" });
+}
+
 export function anchorProps(href: string): {
   target?: "_blank";
   rel?: string;

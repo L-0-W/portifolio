@@ -25,19 +25,6 @@ function GitHubIcon(props: GlyphProps) {
   );
 }
 
-function InstagramIcon(props: GlyphProps) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        fill="currentColor"
-        fillRule="evenodd"
-        d="M7.2 3h9.6A4.2 4.2 0 0 1 21 7.2v9.6a4.2 4.2 0 0 1-4.2 4.2H7.2A4.2 4.2 0 0 1 3 16.8V7.2A4.2 4.2 0 0 1 7.2 3zm4.8 5.1a3.9 3.9 0 1 0 .01 0zm0 1.5a2.4 2.4 0 1 1-.01 0z"
-      />
-      <circle cx="17.15" cy="6.8" r="0.95" fill="currentColor" />
-    </svg>
-  );
-}
-
 function MailIcon(props: GlyphProps) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
@@ -59,7 +46,6 @@ function MailIcon(props: GlyphProps) {
 export const socialIcons: Record<SocialIcon, ComponentType<GlyphProps>> = {
   linkedin: LinkedInIcon,
   github: GitHubIcon,
-  instagram: InstagramIcon,
   mail: MailIcon,
 };
 

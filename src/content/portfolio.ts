@@ -19,7 +19,7 @@ export type InlinePart = {
   badge?: boolean;
 };
 
-export type SocialIcon = "linkedin" | "github" | "instagram" | "mail";
+export type SocialIcon = "linkedin" | "github" | "mail";
 
 export type SocialLink = {
   label: string;
@@ -126,39 +126,39 @@ export const statusLabel: Record<ReadingStatus, string> = {
 };
 
 export const profile = {
-  name: "Helena Duarte",
+  name: "Luiz Felipe",
   kicker: "Folha pessoal",
-  trade: "Designer de interfaces",
-  tags: ["Interfaces", "Ofício", "Tipo"] as const,
+  trade: "Full-stack / System Programming",
+  tags: ["Full-stack", "Sistemas", "Gráficos"] as const,
   year: 2026,
   description:
-    "Onde trabalhei, o que criei, e um caderno de projetos, escrituras e leituras.",
+    "Sistemas de suporte e controle administrativo, computação gráfica e programação de sistemas.",
   paragraphs: [
     [
-      { text: "Criou experiências de produto na " },
-      { text: "Oficina Norte", href: "#" },
-      { text: " e na " },
-      { text: "Lume", href: "#" },
-      { text: ", e antes disso cofundou o " },
-      { text: "Ateliê", href: "#" },
       {
-        text: ", desenhando ferramentas para quem publica na web.",
+        text: "Criou sistemas de suporte e controle administrativo em diferentes empresas e levantou requisitos de pequenas empresas para criar soluções agradáveis. Estuda e gosta bastante de computação gráfica e de programação de sistemas.",
       },
     ],
     [
+      { text: "Também gosta de ler " },
+      { text: "livros", href: "#lendo" },
       {
-        text: "Também é metade de um estúdio pequeno que faz aplicativos para Mac.",
+        text: " sobre a área, de conhecer tecnologias novas e de escrever ",
       },
-      { text: "notas", href: "#escrituras", badge: true },
+      { text: "artigos", href: "#escrituras" },
+      { text: " sobre descobertas e feitos." },
     ],
   ] satisfies InlinePart[][],
 };
 
 export const socialLinks: SocialLink[] = [
-  { label: "LinkedIn", href: "#", icon: "linkedin" },
-  { label: "GitHub", href: "#", icon: "github" },
-  { label: "Instagram", href: "#", icon: "instagram" },
-  { label: "E-mail", href: "#", icon: "mail" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/feed/",
+    icon: "linkedin",
+  },
+  { label: "GitHub", href: "https://github.com/L-0-W", icon: "github" },
+  { label: "E-mail", href: "mailto:fluiz7880@gmail.com", icon: "mail" },
 ];
 
 export const sections = [

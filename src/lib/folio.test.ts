@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { profile, readings, writings } from "../content/portfolio.ts";
+import { profile, readings, socialLinks, writings } from "../content/portfolio.ts";
 import {
   dateMark,
   initialPick,
@@ -49,6 +49,27 @@ describe("fólio", () => {
         { id: "aberta", status: "lendo" },
       ]),
       "aberta",
+    );
+  });
+
+  it("apresenta Luiz Felipe, as redes reais e os links do caderno", () => {
+    assert.equal(profile.name, "Luiz Felipe");
+    assert.equal(profile.trade, "Full-stack / System Programming");
+    assert.deepEqual(profile.tags, ["Full-stack", "Sistemas", "Gráficos"]);
+
+    const hrefs = profile.paragraphs.flat().flatMap((part) =>
+      part.href ? [part.href] : [],
+    );
+    assert.ok(hrefs.includes("#lendo"));
+    assert.ok(hrefs.includes("#escrituras"));
+
+    assert.deepEqual(
+      socialLinks.map((link) => [link.icon, link.href]),
+      [
+        ["linkedin", "https://www.linkedin.com/feed/"],
+        ["github", "https://github.com/L-0-W"],
+        ["mail", "mailto:fluiz7880@gmail.com"],
+      ],
     );
   });
 
