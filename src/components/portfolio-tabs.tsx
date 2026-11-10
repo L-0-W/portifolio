@@ -11,6 +11,7 @@ import {
   writings,
   type SectionId,
 } from "@/content/portfolio";
+import { cadernoId, scrollCadernoIntoView } from "@/lib/links";
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react";
 
 function isSectionId(value: string): value is SectionId {
@@ -24,14 +25,19 @@ function sectionFromHash(): SectionId | null {
 
 export function PortfolioTabs() {
   const [current, setCurrent] = useState<SectionId>("projetos");
+  const [scrollRequest, setScrollRequest] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const scrollLock = useRef<number | null>(null);
+  const scrollToCaderno = useRef(false);
   const section = sections.find((item) => item.id === current) ?? sections[0];
 
   useEffect(() => {
     function syncFromHash() {
       const next = sectionFromHash();
-      if (next) setCurrent(next);
+      if (!next) return;
+      scrollToCaderno.current = true;
+      setCurrent(next);
+      setScrollRequest((request) => request + 1);
     }
 
     syncFromHash();
@@ -41,14 +47,23 @@ export function PortfolioTabs() {
 
   // Trocar a seção remove o miolo antes de pintar o próximo. O navegador
   // encolhe a página nesse intervalo e sobe o scroll, como um atalho para o topo.
+  // Um link com hash pede a descida até o caderno; o clique na aba não pede.
   useLayoutEffect(() => {
+    if (scrollToCaderno.current) {
+      scrollToCaderno.current = false;
+      scrollLock.current = null;
+      scrollCadernoIntoView();
+      return;
+    }
+
     const y = scrollLock.current;
     if (y === null) return;
     scrollLock.current = null;
     if (window.scrollY !== y) window.scrollTo(0, y);
-  }, [current]);
+  }, [current, scrollRequest]);
 
   function select(id: SectionId, shouldFocus = false) {
+    scrollToCaderno.current = false;
     if (id !== current) scrollLock.current = window.scrollY;
     setCurrent(id);
     const nextHash = `#${id}`;
@@ -75,7 +90,7 @@ export function PortfolioTabs() {
   }
 
   return (
-    <section id="secoes" aria-labelledby="tab-heading" className="caderno">
+    <section id={cadernoId} aria-labelledby="tab-heading" className="caderno">
       <h2 id="tab-heading" className="sr-only">
         Caderno
       </h2>
