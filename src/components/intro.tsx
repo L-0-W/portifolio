@@ -11,6 +11,7 @@ import {
   STREAK_GAP_MS,
   emptyStreak,
   figureById,
+  keptSelection,
   registerClick,
   selectFigure,
   type ClickStreak,
@@ -34,6 +35,30 @@ export function Intro() {
     const timer = window.setTimeout(() => setGlitch(null), GLITCH_HOLD_MS);
     return () => window.clearTimeout(timer);
   }, [glitch]);
+
+  useEffect(() => {
+    const carousel = window.matchMedia("(max-width: 439px)");
+    const short = window.matchMedia("(max-width: 559px)");
+    const medium = window.matchMedia("(max-width: 719px)");
+
+    function releaseHidden() {
+      const shelf = {
+        carousel: carousel.matches,
+        short: short.matches,
+        medium: medium.matches,
+      };
+      setSelectedId((current) => keptSelection(figures, current, shelf));
+    }
+
+    carousel.addEventListener("change", releaseHidden);
+    short.addEventListener("change", releaseHidden);
+    medium.addEventListener("change", releaseHidden);
+    return () => {
+      carousel.removeEventListener("change", releaseHidden);
+      short.removeEventListener("change", releaseHidden);
+      medium.removeEventListener("change", releaseHidden);
+    };
+  }, []);
 
   function onPick(id: string) {
     setSelectedId((current) => selectFigure(figures, current, id));

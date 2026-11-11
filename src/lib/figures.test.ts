@@ -7,6 +7,8 @@ import {
   STREAK_GAP_MS,
   emptyStreak,
   figureById,
+  figureShown,
+  keptSelection,
   rainLines,
   registerClick,
   selectFigure,
@@ -43,6 +45,23 @@ describe("pessoas da grade", () => {
     ]);
     assert.deepEqual(ids(1), ["hamilton", "berners-lee", "maxwell", "curie"]);
     assert.deepEqual(ids(2), ["feynman", "euler", "gauss", "noether"]);
+  });
+
+  it("solta a carta que a largura esconde e mantém a do carrossel", () => {
+    const wide = { carousel: false, short: false, medium: false };
+    const medium = { carousel: false, short: false, medium: true };
+    const short = { carousel: false, short: true, medium: true };
+    const carousel = { carousel: true, short: true, medium: true };
+    assert.equal(figureShown(2, wide), true);
+    assert.equal(figureShown(2, medium), false);
+    assert.equal(figureShown(1, medium), true);
+    assert.equal(figureShown(1, short), false);
+    assert.equal(figureShown(0, short), true);
+    assert.equal(figureShown(2, carousel), true);
+    assert.equal(keptSelection(figures, "feynman", medium), null);
+    assert.equal(keptSelection(figures, "newton", short), "newton");
+    assert.equal(keptSelection(figures, "feynman", carousel), "feynman");
+    assert.equal(keptSelection(figures, null, short), null);
   });
 
   it("escolhe só uma carta que existe", () => {

@@ -41,6 +41,30 @@ export function figureById<T extends { id: string }>(
   return figures.find((figure) => figure.id === id) ?? null;
 }
 
+export type FigureShelf = {
+  carousel: boolean;
+  short: boolean;
+  medium: boolean;
+};
+
+export function figureShown(tier: 0 | 1 | 2, shelf: FigureShelf): boolean {
+  if (shelf.carousel) return true;
+  if (shelf.short) return tier === 0;
+  if (shelf.medium) return tier < 2;
+  return true;
+}
+
+export function keptSelection<T extends { id: string; tier: 0 | 1 | 2 }>(
+  figures: readonly T[],
+  selectedId: string | null,
+  shelf: FigureShelf,
+): string | null {
+  if (!selectedId) return null;
+  const figure = figures.find((item) => item.id === selectedId);
+  if (!figure || !figureShown(figure.tier, shelf)) return null;
+  return selectedId;
+}
+
 export function rainLines(fragments: readonly string[], count: number): string[] {
   if (fragments.length === 0 || count <= 0) return [];
   return Array.from({ length: count }, (_, index) => {
