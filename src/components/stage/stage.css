@@ -712,18 +712,6 @@
 }
 
 @media (max-width: 719px) {
-  .figure-grid > li[data-tier="2"] {
-    display: none;
-  }
-}
-
-@media (max-width: 559px) {
-  .figure-grid > li[data-tier="1"] {
-    display: none;
-  }
-}
-
-@media (max-width: 439px) {
   .figure-carousel {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -750,14 +738,9 @@
   }
 
   .figure-grid > li {
-    flex: 0 0 42%;
-    min-width: 42%;
+    flex: 0 0 clamp(7.5rem, 42%, 9.5rem);
+    min-width: clamp(7.5rem, 42%, 9.5rem);
     scroll-snap-align: start;
-  }
-
-  .figure-grid > li[data-tier="1"],
-  .figure-grid > li[data-tier="2"] {
-    display: block;
   }
 
   .figure-card {

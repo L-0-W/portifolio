@@ -46,7 +46,7 @@ export function FigureGrid({
         {figures.map((figure) => {
           const pressed = figure.id === selectedId;
           return (
-            <li key={figure.id} data-tier={figure.tier}>
+            <li key={figure.id}>
               <button
                 type="button"
                 className="mast-card figure-card"
