@@ -28,6 +28,23 @@ describe("pessoas da grade", () => {
     }
   });
 
+  it("guarda oito cartas na grade curta, quatro na média e quatro na cheia", () => {
+    const ids = (tier: number) =>
+      figures.filter((figure) => figure.tier === tier).map((figure) => figure.id);
+    assert.deepEqual(ids(0), [
+      "lovelace",
+      "turing",
+      "hopper",
+      "neumann",
+      "shannon",
+      "dijkstra",
+      "knuth",
+      "newton",
+    ]);
+    assert.deepEqual(ids(1), ["hamilton", "berners-lee", "maxwell", "curie"]);
+    assert.deepEqual(ids(2), ["feynman", "euler", "gauss", "noether"]);
+  });
+
   it("escolhe só uma carta que existe", () => {
     assert.equal(selectFigure(figures, null, "newton"), "newton");
     assert.equal(selectFigure(figures, "newton", "turing"), "turing");
