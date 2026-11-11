@@ -16,20 +16,10 @@ import {
 describe("elenco", () => {
   const items = buildRoster(projects, rosterSlots);
 
-  it("publica cada projeto uma vez, com a gaveta e a reserva no fim", () => {
+  it("publica só o portal", () => {
     assert.deepEqual(
       items.map((item) => item.id),
-      [
-        "portal-administrativo",
-        "lume",
-        "oficina",
-        "margem",
-        "prego",
-        "caderno",
-        "tipo",
-        "gaveta",
-        "reserva",
-      ],
+      ["portal-administrativo"],
     );
     for (const project of projects) {
       const found = items.find((item) => item.id === project.slug);
@@ -47,12 +37,25 @@ describe("elenco", () => {
   });
 
   it("troca só entre projetos abertos", () => {
-    assert.equal(selectRoster(items, "lume", "tipo"), "tipo");
-    assert.equal(selectRoster(items, "tipo", "lume"), "lume");
-    assert.equal(selectRoster(items, "lume", "gaveta"), "lume");
-    assert.equal(selectRoster(items, "lume", "reserva"), "lume");
-    assert.equal(selectRoster(items, "lume", "ausente"), "lume");
-    assert.equal(selectedProject(items, "oficina").title, "Oficina");
+    const portal = projects[0];
+    const mixed = buildRoster(
+      [
+        { ...portal, slug: "um" },
+        { ...portal, slug: "dois", mark: undefined },
+      ],
+      [
+        { kind: "project", slug: "um" },
+        { kind: "project", slug: "dois" },
+        { kind: "held", id: "gaveta", title: "Gaveta" },
+        { kind: "sealed", id: "reserva" },
+      ],
+    );
+    assert.equal(selectRoster(mixed, "um", "dois"), "dois");
+    assert.equal(selectRoster(mixed, "dois", "um"), "um");
+    assert.equal(selectRoster(mixed, "um", "gaveta"), "um");
+    assert.equal(selectRoster(mixed, "um", "reserva"), "um");
+    assert.equal(selectRoster(mixed, "um", "ausente"), "um");
+    assert.equal(selectedProject(items, "portal-administrativo").title, "Portal Administrativo");
   });
 
   it("recusa um slug que não está no caderno", () => {
