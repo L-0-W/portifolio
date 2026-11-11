@@ -22,7 +22,8 @@ describe("projetos", () => {
   });
 
   it("encontra o projeto pelo slug e ignora um slug desconhecido", () => {
-    assert.equal(findProject("lume")?.title, "Lume");
+    assert.equal(findProject("portal-administrativo")?.title, "Portal Administrativo");
+    assert.equal(findProject("lume"), undefined);
     assert.equal(findProject("nao-existe"), undefined);
   });
 
