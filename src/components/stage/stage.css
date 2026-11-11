@@ -712,6 +712,10 @@
 }
 
 @media (max-width: 719px) {
+  .mast .poster-slot {
+    padding: 0.85rem 0.35rem 0.75rem;
+  }
+
   .figure-carousel {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
@@ -728,6 +732,9 @@
     min-width: 0;
     gap: 0.45rem;
     overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.4rem 0.12rem 0.6rem;
+    scroll-padding-inline: 0.12rem;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
@@ -738,8 +745,8 @@
   }
 
   .figure-grid > li {
-    flex: 0 0 clamp(7.5rem, 42%, 9.5rem);
-    min-width: clamp(7.5rem, 42%, 9.5rem);
+    flex: 0 0 clamp(6.75rem, 36%, 8.25rem);
+    min-width: clamp(6.75rem, 36%, 8.25rem);
     scroll-snap-align: start;
   }
 
