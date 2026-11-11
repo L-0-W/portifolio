@@ -77,6 +77,11 @@ describe("fólio", () => {
 
   it("publica a capa dos livros que estão na mão", () => {
     const publicRoot = path.join(import.meta.dirname, "../../public");
+    assert.deepEqual(
+      readings.map((book) => book.id),
+      ["beautiful-cpp", "crafting-interpreters"],
+    );
+    assert.deepEqual(writings, []);
     for (const id of ["beautiful-cpp", "crafting-interpreters"]) {
       const book = readings.find((item) => item.id === id);
       assert.equal(book?.status, "lendo");
